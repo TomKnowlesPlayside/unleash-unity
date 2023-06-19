@@ -14,7 +14,7 @@ namespace Unleash.Communication
 {
     internal class UnleashApiClient : IUnleashApiClient
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(UnleashApiClient));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
 
         private readonly HttpClient httpClient;
         private readonly IJsonSerializer jsonSerializer;
@@ -54,7 +54,7 @@ namespace Unleash.Communication
                     if (!response.IsSuccessStatusCode)
                     {
                         var error = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        Logger.Trace($"UNLEASH: Error {response.StatusCode} from server in '{nameof(FetchToggles)}': " + error);
+                        Logger.Log($"UNLEASH: Error {response.StatusCode} from server in '{nameof(FetchToggles)}': " + error, LogVerbocity.Trace);
                         eventConfig?.RaiseError(new ErrorEvent() { ErrorType = ErrorType.Client, StatusCode = response.StatusCode, Resource = resourceUri });
 
                         return new FetchTogglesResult
@@ -143,7 +143,7 @@ namespace Unleash.Communication
                         return true;
 
                     var error = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Logger.Trace($"UNLEASH: Error {response.StatusCode} from request '{resourceUri}' in '{nameof(UnleashApiClient)}': " + error);
+                    Logger.Log($"UNLEASH: Error {response.StatusCode} from request '{resourceUri}' in '{nameof(UnleashApiClient)}': " + error, LogVerbocity.Trace);
                     eventConfig?.RaiseError(new ErrorEvent() { Resource = resourceUri, ErrorType = ErrorType.Client, StatusCode = response.StatusCode });
 
                     return false;

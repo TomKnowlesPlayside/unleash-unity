@@ -10,7 +10,7 @@ namespace Unleash.Strategies
 
     public class RemoteAddressStrategy : IStrategy
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(DefaultUnleash));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
         internal static readonly string PARAM = "IPs";
 
         public string Name => "remoteAddress";
@@ -56,7 +56,7 @@ namespace Unleash.Strategies
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error($"UNLEASH: RemoteAddressStrategy->ToAddressRanges threw exception: {ex.Message}. (Badly formatted IP/CIDR?)");
+                    Logger.Log($"UNLEASH: RemoteAddressStrategy->ToAddressRanges threw exception: {ex.Message}. (Badly formatted IP/CIDR?)", LogVerbocity.Error);
                 }
             }
 

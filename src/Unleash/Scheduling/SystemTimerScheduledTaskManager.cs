@@ -13,8 +13,7 @@ namespace Unleash.Scheduling
     /// </summary>
     internal class SystemTimerScheduledTaskManager : IUnleashScheduledTaskManager
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(SystemTimerScheduledTaskManager));
-
+        private static readonly ILogger Logger = LoggingService.GetLogger();
         private readonly Dictionary<string, Timer> timers = new Dictionary<string, Timer>();
 
         public void Configure(IEnumerable<IUnleashScheduledTask> tasks, CancellationToken cancellationToken)
@@ -42,12 +41,12 @@ namespace Unleash.Scheduling
                 {
                     if (!cancellationToken.IsCancellationRequested)
                     {
-                        Logger.WarnException($"UNLEASH: Task '{name}' cancelled ...", taskCanceledException);
+                        Logger.LogException($"UNLEASH: Task '{name}' cancelled ...", taskCanceledException);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorException($"UNLEASH: Unhandled exception from background task '{name}'.", ex);
+                    Logger.LogException($"UNLEASH: Unhandled exception from background task '{name}'.", ex);
                 }
                 finally
                 {

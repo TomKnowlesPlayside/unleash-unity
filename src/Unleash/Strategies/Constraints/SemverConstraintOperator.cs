@@ -10,7 +10,7 @@ namespace Unleash.Strategies.Constraints
 {
     public class SemverConstraintOperator : IConstraintOperator
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(SemverConstraintOperator));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
 
         public bool Evaluate(Constraint constraint, UnleashContext context)
         {
@@ -18,7 +18,7 @@ namespace Unleash.Strategies.Constraints
             SemanticVersion contextSemver;
             if (!SemanticVersion.TryParse(contextValue, out contextSemver))
             {
-                Logger.Info("Couldn't parse version {0} from context");
+                Logger.Log("Couldn't parse version {0} from context", LogVerbocity.Info);
                 return false;
             }
 

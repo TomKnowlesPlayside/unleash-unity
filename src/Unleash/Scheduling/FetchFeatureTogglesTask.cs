@@ -13,7 +13,7 @@ namespace Unleash.Scheduling
 {
     internal class FetchFeatureTogglesTask : IUnleashScheduledTask
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(FetchFeatureTogglesTask));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
         private readonly string toggleFile;
         private readonly string etagFile;
 
@@ -53,7 +53,7 @@ namespace Unleash.Scheduling
             }
             catch (HttpRequestException ex)
             {
-                Logger.ErrorException($"UNLEASH: Unhandled exception when fetching toggles.", ex);
+                Logger.LogException($"UNLEASH: Unhandled exception when fetching toggles.", ex);
                 eventConfig?.RaiseError(new ErrorEvent() { ErrorType = ErrorType.Client, Error = ex });
                 return;
             }
@@ -78,7 +78,7 @@ namespace Unleash.Scheduling
             } 
             catch (IOException ex)
             {
-                Logger.WarnException($"UNLEASH: Exception when writing to toggle file '{toggleFile}'.", ex);
+                Logger.LogException($"UNLEASH: Exception when writing to toggle file '{toggleFile}'.", ex);
                 eventConfig?.RaiseError(new ErrorEvent() { ErrorType = ErrorType.TogglesBackup, Error = ex });
             }
 
@@ -90,7 +90,7 @@ namespace Unleash.Scheduling
             }
             catch (IOException ex)
             {
-                Logger.WarnException($"UNLEASH: Exception when writing to ETag file '{etagFile}'.", ex);
+                Logger.LogException($"UNLEASH: Exception when writing to ETag file '{etagFile}'.", ex);
                 eventConfig?.RaiseError(new ErrorEvent() { ErrorType = ErrorType.TogglesBackup, Error = ex });
             }
         }

@@ -11,7 +11,7 @@ namespace Unleash.Internal
 {
     internal static class UnleashExtensions
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(UnleashExtensions));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
 
         internal static void AddContentTypeJson(this HttpContentHeaders headers)
         {
@@ -98,7 +98,7 @@ namespace Unleash.Internal
             }
             catch (Exception exception)
             {
-                Logger.Trace("UNLEASH: Failed to extract local ip address", exception);
+                Logger.LogException("UNLEASH: Failed to extract local ip address", exception);
                 return "undefined";
             }
         }

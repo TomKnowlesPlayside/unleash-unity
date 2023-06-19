@@ -1,14 +1,13 @@
 using System.IO;
 using Unleash.Events;
 using Unleash.Logging;
-using Unleash.Scheduling;
 using Unleash.Serialization;
 
 namespace Unleash.Internal
 {
     internal class CachedFilesLoader
     {
-        private static readonly ILog Logger = LogProvider.GetLogger(typeof(FetchFeatureTogglesTask));
+        private static readonly ILogger Logger = LoggingService.GetLogger();
         private readonly IJsonSerializer jsonSerializer;
         private readonly IFileSystem fileSystem;
         private readonly IToggleBootstrapProvider toggleBootstrapProvider;
@@ -49,7 +48,7 @@ namespace Unleash.Internal
                 }
                 catch (IOException ex)
                 {
-                    Logger.ErrorException($"UNLEASH: Unhandled exception when writing to ETag file '{etagFile}'.", ex);
+                    Logger.LogException($"UNLEASH: Unhandled exception when writing to ETag file '{etagFile}'.", ex);
                     eventConfig?.RaiseError(new ErrorEvent() { Error = ex, ErrorType = ErrorType.FileCache });
                 }
             }
@@ -61,7 +60,7 @@ namespace Unleash.Internal
                 }
                 catch (IOException ex)
                 {
-                    Logger.ErrorException($"UNLEASH: Unhandled exception when reading from ETag file '{etagFile}'.", ex);
+                    Logger.LogException($"UNLEASH: Unhandled exception when reading from ETag file '{etagFile}'.", ex);
                     eventConfig?.RaiseError(new ErrorEvent() { Error = ex, ErrorType = ErrorType.FileCache });
                 }
             }
@@ -76,7 +75,7 @@ namespace Unleash.Internal
                 }
                 catch (IOException ex)
                 {
-                    Logger.ErrorException($"UNLEASH: Unhandled exception when writing to toggle file '{toggleFile}'.", ex);
+                    Logger.LogException($"UNLEASH: Unhandled exception when writing to toggle file '{toggleFile}'.", ex);
                     eventConfig?.RaiseError(new ErrorEvent() { Error = ex, ErrorType = ErrorType.FileCache });
                 }
             }
@@ -91,7 +90,7 @@ namespace Unleash.Internal
                 }
                 catch (IOException ex)
                 {
-                    Logger.ErrorException($"UNLEASH: Unhandled exception when reading from toggle file '{toggleFile}'.", ex);
+                    Logger.LogException($"UNLEASH: Unhandled exception when reading from toggle file '{toggleFile}'.", ex);
                     eventConfig?.RaiseError(new ErrorEvent() { Error = ex, ErrorType = ErrorType.FileCache });
                 }
             }
