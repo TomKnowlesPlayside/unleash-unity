@@ -14,6 +14,7 @@ namespace Unleash.Internal
         private readonly EventCallbackConfig eventConfig;
         private readonly string toggleFile;
         private readonly string etagFile;
+        private readonly bool enableFileWriting;
         private readonly bool bootstrapOverride;
 
         public CachedFilesLoader(
@@ -23,6 +24,7 @@ namespace Unleash.Internal
             EventCallbackConfig eventConfig,
             string toggleFile,
             string etagFile,
+            bool enableFileWriting = true,
             bool bootstrapOverride = true)
         {
             this.jsonSerializer = jsonSerializer;
@@ -31,6 +33,7 @@ namespace Unleash.Internal
             this.eventConfig = eventConfig;
             this.toggleFile = toggleFile;
             this.etagFile = etagFile;
+            this.enableFileWriting = enableFileWriting;
             this.bootstrapOverride = bootstrapOverride;
         }
 
@@ -43,7 +46,10 @@ namespace Unleash.Internal
                 // Ensure files exists.
                 try
                 {
-                    fileSystem.WriteAllText(etagFile, string.Empty);
+                    if (enableFileWriting == true)
+                    {
+                        fileSystem.WriteAllText(etagFile, string.Empty);
+                    }
                     result.InitialETag = string.Empty;
                 }
                 catch (IOException ex)
@@ -70,7 +76,10 @@ namespace Unleash.Internal
             {
                 try
                 {
-                    fileSystem.WriteAllText(toggleFile, string.Empty);
+                    if (enableFileWriting)
+                    {
+                        fileSystem.WriteAllText(toggleFile, string.Empty);
+                    }
                     result.InitialToggleCollection = null;
                 }
                 catch (IOException ex)
