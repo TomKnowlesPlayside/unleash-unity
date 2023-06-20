@@ -32,14 +32,8 @@ namespace Unleash.Internal
             }
         }
 
-        internal static void SafeTimerChange(this Timer timer, dynamic dueTime, dynamic period, ref bool disposeEnded)
+        internal static void SafeTimerChange(this Timer timer, Int32 dueTime, Int32 period, ref bool disposeEnded)
         {
-            if (dueTime.GetType() != period.GetType())
-                throw new Exception("Data types has to match. (Int32 or TimeSpan)");
-
-            if (!(dueTime.GetType() != typeof(int) || dueTime.GetType() != typeof(TimeSpan)))
-                throw new Exception("Only System.Int32 or System.TimeSpan");
-
             try
             {
                 timer?.Change(dueTime, period);
@@ -59,6 +53,21 @@ namespace Unleash.Internal
                     // since the offending code would most likely already be "failing"
                     // unreliably i personally can live with increasing the
                     // "unreliable failure" time-window slightly
+                    throw;
+                }
+            }
+        }
+        
+        internal static void SafeTimerChange(this Timer timer, TimeSpan dueTime, TimeSpan period, ref bool disposeEnded)
+        {
+            try
+            {
+                timer?.Change(dueTime, period);
+            }
+            catch (ObjectDisposedException)
+            {
+                if (disposeEnded)
+                {
                     throw;
                 }
             }
