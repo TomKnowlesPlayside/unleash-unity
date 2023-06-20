@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Unleash;
 using Unleash.Serialization;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace WinFormsApp
 {

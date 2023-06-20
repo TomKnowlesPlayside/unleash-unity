@@ -2,11 +2,9 @@
 using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Unleash.Internal;
-using Unleash.Tests.Mock;
-using Unleash.Tests.Serialization;
+using Unleash.Serialization;
 using Unleash.Variants;
 
 namespace Unleash.Tests.Internal
@@ -45,7 +43,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1-missing.json");
             string etagFileName = AppDataFile("etag-missing.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var bootstrapToggles = GetTestToggles();
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -70,7 +68,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1-missing.json");
             string etagFileName = AppDataFile("etag-missing.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             ToggleCollection bootstrapToggles = null;
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -95,7 +93,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
             string etagFileName = AppDataFile("etag-missing.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var bootstrapToggles = GetTestToggles();
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -120,7 +118,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
             string etagFileName = AppDataFile("etag-missing.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var bootstrapToggles = GetTestToggles();
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -143,7 +141,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
             string etagFileName = AppDataFile("etag-12345.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var settings = new UnleashSettings();
             var fileLoader = new CachedFilesLoader(serializer, fileSystem, null, null, toggleFileName, etagFileName);
@@ -162,7 +160,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
             string etagFileName = AppDataFile("etag-12345.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var settings = new UnleashSettings();
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -184,7 +182,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
             string etagFileName = AppDataFile("etag-12345.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var settings = new UnleashSettings();
             var bootstrapProviderFake = A.Fake<IToggleBootstrapProvider>();
@@ -206,7 +204,7 @@ namespace Unleash.Tests.Internal
             // Arrange
             string toggleFileName = AppDataFile("features-v1-empty.json");
             string etagFileName = AppDataFile("etag-12345.txt");
-            var serializer = new JsonNetSerializer();
+            var serializer = new JsonSerializer();
             var fileSystem = new FileSystem(Encoding.UTF8);
             var settings = new UnleashSettings();
             var bootstrapToggles = GetTestToggles();

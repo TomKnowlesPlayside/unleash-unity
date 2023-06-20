@@ -1,3 +1,5 @@
+using Unleash.Serialization;
+
 namespace Unleash.Internal
 {
     internal class UnleashSettingsValidator
@@ -15,8 +17,6 @@ namespace Unleash.Internal
 
             if (settings.JsonSerializer == null)
                 throw new UnleashException("You are required to specify an json serializer");
-
-            settings.JsonSerializer = DynamicJsonLibraryChooser.CheckIfJsonSerializerCanBeInitialized(settings.JsonSerializer);
         }
     }
 }

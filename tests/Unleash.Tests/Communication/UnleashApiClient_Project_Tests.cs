@@ -21,9 +21,7 @@ namespace Unleash.Tests.Communication
         {
             var apiUri = new Uri("http://unleash.herokuapp.com/api/");
 
-            var jsonSerializer = new DynamicNewtonsoftJsonSerializer();
-            jsonSerializer.TryLoad();
-
+            var jsonSerializer = new JsonSerializer();
             var requestHeaders = new UnleashApiClientRequestHeaders
             {
                 AppName = "api-test-client",

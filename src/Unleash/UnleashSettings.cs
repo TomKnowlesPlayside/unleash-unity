@@ -101,7 +101,7 @@ namespace Unleash
         /// 
         /// Default: A serializer based on Newtonsoft will be used, given that these assemblies are loaded into the appdomain already.
         /// </summary>
-        public IJsonSerializer JsonSerializer { get; set; } = new DynamicNewtonsoftJsonSerializer();
+        public IJsonSerializer JsonSerializer { get; set; } = new JsonSerializer();
 
         /// <summary>
         /// Get or sets a factory class for creating the HttpClient instance used for communicating with the backend.

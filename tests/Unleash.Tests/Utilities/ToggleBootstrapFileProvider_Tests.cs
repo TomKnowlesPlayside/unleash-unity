@@ -1,14 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Unleash.Internal;
 using Unleash.Serialization;
-using Unleash.Tests.Serialization;
 using Unleash.Utilities;
 
 namespace Unleash.Tests.Utilities
@@ -27,7 +22,7 @@ namespace Unleash.Tests.Utilities
             // Arrange
             var fileSystem = new FileSystem(Encoding.UTF8);
             string toggleFileName = AppDataFile("unleash-repo-v1-missing.json");
-            var toggleFileProvider = new ToggleBootstrapFileProvider(toggleFileName, new UnleashSettings() { FileSystem = fileSystem, JsonSerializer = new JsonNetSerializer() });
+            var toggleFileProvider = new ToggleBootstrapFileProvider(toggleFileName, new UnleashSettings() { FileSystem = fileSystem, JsonSerializer = new JsonSerializer() });
 
             // Act
             var emptyResult = toggleFileProvider.Read();
@@ -42,7 +37,7 @@ namespace Unleash.Tests.Utilities
             // Arrange
             var fileSystem = new FileSystem(Encoding.UTF8);
             string toggleFileName = AppDataFile("unleash-repo-v1.json");
-            var toggleFileProvider = new ToggleBootstrapFileProvider(toggleFileName, new UnleashSettings() { FileSystem = fileSystem, JsonSerializer = new JsonNetSerializer() });
+            var toggleFileProvider = new ToggleBootstrapFileProvider(toggleFileName, new UnleashSettings() { FileSystem = fileSystem, JsonSerializer = new JsonSerializer() });
             var fileContent = fileSystem.ReadAllText(toggleFileName);
 
             // Act
@@ -58,7 +53,7 @@ namespace Unleash.Tests.Utilities
             // Arrange
             var settings = new UnleashSettings()
             {
-                JsonSerializer = new JsonNetSerializer(),
+                JsonSerializer = new JsonSerializer(),
             };
             var toggleFileName = AppDataFile("unleash-repo-v1.json");
             settings.UseBootstrapFileProvider(toggleFileName);

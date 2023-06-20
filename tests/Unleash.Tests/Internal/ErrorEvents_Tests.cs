@@ -38,7 +38,7 @@ namespace Unleash.Tests.Internal
             {
                 ErrorEvent = evt => { callbackEvent = evt; }
             };
-            var unleashClient = new UnleashApiClient(httpClient, new DynamicNewtonsoftJsonSerializer(), new UnleashApiClientRequestHeaders(), eventConfig: callbackConfig);
+            var unleashClient = new UnleashApiClient(httpClient, new JsonSerializer(), new UnleashApiClientRequestHeaders(), eventConfig: callbackConfig);
             var cancellationTokenSource = new CancellationTokenSource();
 
             // Act
@@ -65,8 +65,7 @@ namespace Unleash.Tests.Internal
                 ErrorEvent = evt => { callbackEvent = evt; }
             };
 
-            var deserializer = new DynamicNewtonsoftJsonSerializer();
-            deserializer.TryLoad();
+            var deserializer = new JsonSerializer();
             var unleashClient = new UnleashApiClient(httpClient, deserializer, new UnleashApiClientRequestHeaders(), eventConfig: callbackConfig);
             var cancellationTokenSource = new CancellationTokenSource();
 
@@ -94,7 +93,7 @@ namespace Unleash.Tests.Internal
                 .ThrowsAsync(() => new HttpRequestException("The remote server refused the connection"));
 
             var collection = new ThreadSafeToggleCollection();
-            var serializer = new DynamicNewtonsoftJsonSerializer();
+            var serializer = new JsonSerializer();
             var filesystem = new MockFileSystem();
             var tokenSource = new CancellationTokenSource();
             var task = new FetchFeatureTogglesTask(fakeApiClient, collection, serializer, filesystem, callbackConfig, "togglefile.txt", "etagfile.txt");
